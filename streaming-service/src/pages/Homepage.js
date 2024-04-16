@@ -15,9 +15,22 @@ function Homepage() {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         const data = await response.json();
-        if (data && data.featured && Array.isArray(data.categories)) {
-          setFeatured(data.featured);
-          setCategories(data.categories);
+
+        if (data) {
+          // Assume the first show as featured for the sake of example
+          setFeatured(data[0]);
+          const genreGroups = data.reduce((acc, show) => {
+            acc[show.genre] = acc[show.genre] || [];
+            acc[show.genre].push(show);
+            return acc;
+          }, {});
+
+          const sortedCategories = Object.keys(genreGroups).sort().map(genre => ({
+            categoryName: genre,
+            shows: genreGroups[genre]
+          }));
+
+          setCategories(sortedCategories);
         } else {
           console.error('Data is not in the expected format:', data);
         }

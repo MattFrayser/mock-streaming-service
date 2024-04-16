@@ -5,13 +5,12 @@ import './components.css';
 const Featured = ({ featured }) => (
   <div className="featured" style={{ backgroundImage: `url(${featured.image})` }}>
     <div className="featured-details">
-      <h1>{featured.title}</h1>
-      <p>{featured.description}</p>
-      <div className="additional-info">
+      <p className="head">{featured.title}</p>
         <span>{featured.genre}</span>
         <span> | </span>
-        <span>{featured.seasons} Seasons</span>
-      </div>
+        <span>{featured.season} Seasons</span>
+
+      <p className ="desc">{featured.Description}</p>
     </div>
   </div>
 );
