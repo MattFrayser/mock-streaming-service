@@ -1,0 +1,60 @@
+/* PricingPage.css */
+.pricing-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* PriceCard.css */
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease; 
+  }
+
+  .card:hover {
+    transform: scale(1.05); /* Slightly increase the scale of the card on hover */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2); 
+  }
+  
+  .card h2 {
+    color: #333;
+    font-size: xx-large;
+  }
+  
+  .price {
+    font-size: 24px;
+    color: #f6993f;;
+  }
+  
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .card li {
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+  }
+  
+  .card button {
+    background-color: #f6993f;
+
+    left: 50%;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; 
+  }
+
+  .card button:hover {
+    background-color: #f1a050;
+  }
