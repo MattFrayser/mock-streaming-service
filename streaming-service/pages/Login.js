@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "@/styles/login.module.css";
-import PlanSelection from '../components/PlanSelection';
+import LoginForm from '../components/LoginForm'
 
 const LoginPage = () => {
   return (
@@ -8,7 +8,7 @@ const LoginPage = () => {
       <div className={styles['login-container']}>
         <div className={styles['head']}> Anime Streaming </div>
         <div className={styles['sub']}> Dont have an account? 
-        <a href="/signup" className="create-account-link">Start watching now!</a>
+        <a href="/Register" className="create-account-link">Start watching now!</a>
         </div>
         <LoginForm />
       </div>
