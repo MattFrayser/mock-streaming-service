@@ -1,28 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PriceCard from './PriceCard';
 import styles from "@/styles/pricing.module.css";
 
 const PricingPage = () => {
-  const plans = [
-    { 
-    type: 'Super Fan', 
-    price: '$5.99 / month', 
-    features: ['Add Free!', 'Watch In Any Language', 'All Previous Tiers'] },
-    { type: 'Fan', 
-    price: 'Free', 
-    features: ['Access to Total Catelog', 'Unlimited Watchtime', 'No CC Required'] },
-    { type: 'Mega Fan', 
-    price: '$9.99 / month', 
-    features: ['Watch Shows a Day Early', 'Download Shows', 'All Previous Tiers']  }
-  ];
+    const [plans, setPlans] = useState([]);
 
-  return (
-    <div className={styles['pricing-container']}>
-      {plans.map(plan => (
-        <PriceCard key={plan.type} {...plan} />
-      ))}
-    </div>
-  );
+    useEffect(() => {
+        async function fetchPlans() {
+            try {
+                const response = await fetch('/api/getSubscriptionPlans');
+                const data = await response.json();
+
+                const formattedPlans = data[0].map(plan => ({
+                    type: plan.title,
+                    price: `$${plan.price} / ${plan.length} days`,
+                    features: plan.description.split(', ')
+                }));
+              
+                setPlans(formattedPlans);
+        
+            } catch (error) {
+                console.error("Failed to fetch subscription plans:", error);
+            }
+        }
+
+        fetchPlans();
+    }, []);
+
+    return (
+      <div className={styles.background} style={{ backgroundImage: 'url(/register.png)' }}>
+        <div className={styles['pricing-container']}>
+            {plans.map(plan => (
+                <PriceCard key={plan.type} {...plan} />
+            ))}
+        </div>
+        </div>
+    );
 };
 
 export default PricingPage;

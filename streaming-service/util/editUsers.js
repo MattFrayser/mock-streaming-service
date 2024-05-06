@@ -23,7 +23,8 @@ function EditUsers() {
     const [columns] = useState([
         { name: 'name', title: 'Name' },
         { name: 'email', title: 'Email' },
-        { name: 'subscription_status', title: 'Subscription Status' }
+        { name: 'subscription_status', title: 'Subscription Status' },
+        { name: 'device', title: 'device'}
       ]);
   const [rows, setRows] = useState([]);
 
@@ -43,26 +44,26 @@ function EditUsers() {
     fetchUsers();
   }, []);
 
-//   const addShow = async (newRows) => {
-//     try {
-//         const response = await fetch(`/api/addShow`, {
-//           method: 'POST',
-//           headers: { 'Content-Type': 'application/json' },
-//           body: JSON.stringify(newRows),
-//         });
+  // const addUser = async (newRows) => {
+  //   try {
+  //       const response = await fetch(`/api/addUser`, {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(newRows),
+  //       });
   
-//         if (!response.ok) {
-//           throw new Error('Failed to add show(s)');
-//         }
+  //       if (!response.ok) {
+  //         throw new Error('Failed to add');
+  //       }
   
-//         const responseData = await response.json();
-//         console.log('Add successful:', responseData);
-//         setRows([...rows, ...newRows]);
-//       } catch (error) {
-//         console.error('Error adding show(s):', error);
-//         alert(`Error adding show(s): ${error.message}`);
-//       }
-//   }
+  //       const responseData = await response.json();
+  //       console.log('Add successful:', responseData);
+  //       setRows([...rows, ...newRows]);
+  //     } catch (error) {
+  //       console.error('Error adding:', error);
+  //       alert(`Error adding: ${error.message}`);
+  //     }
+  // }
 
   const updateUser = async (email, updatedData) => {
     const index = rows.findIndex(row => row.email === email);
@@ -163,7 +164,7 @@ function EditUsers() {
           <TableColumnVisibility defaultHiddenColumnNames={defaultHiddenColumnNames} />
           <TableHeaderRow showSortingControls />
           <TableEditRow />
-          <TableEditColumn showEditCommand showDeleteCommand />
+          <TableEditColumn showAddCommand showEditCommand showDeleteCommand />
           <Toolbar />
           <SearchPanel />
           <ColumnChooser />

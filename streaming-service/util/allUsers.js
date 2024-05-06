@@ -24,7 +24,8 @@ function ViewUsers() {
   const [columns] = useState([
     { name: 'name', title: 'Name' },
     { name: 'email', title: 'Email' },
-    { name: 'subscription_status', title: 'Subscription Status' }
+    { name: 'subscription_status', title: 'Subscription Status' },
+    { name: 'device', title: 'Device'}
   ]);
   const [rows, setRows] = useState([]);
   const [defaultHiddenColumnNames] = useState([]);

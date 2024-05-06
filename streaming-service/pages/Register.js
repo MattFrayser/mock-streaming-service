@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import PricingPage from '../components/PricingPage';
+import styles from '@/styles/register.module.css';
 
 const Register = () => {
 
 
   return (
-    <div className='background-color: grey'>
-      <PricingPage />
-    </div>
+      <>
+      <div className={styles.background} style={{ backgroundImage: 'url(/register.png)' }}></div>
+        <div>
+        <PricingPage />
+        </div>
+      </>
   );
 };
 

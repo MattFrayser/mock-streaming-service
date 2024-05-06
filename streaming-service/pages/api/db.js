@@ -16,3 +16,11 @@ export async function getDbConnection() {
   }
   return connection;
 }
+
+export async function closeDbConnection() {
+  if (connection) {
+    await connection.end();
+    console.log("Database connection closed");
+    connection = null; 
+  }
+}

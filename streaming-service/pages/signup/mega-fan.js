@@ -73,7 +73,8 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.background} style={{ backgroundImage: 'url(/signup.png)' }}>
+    <div className={styles.container} >
       <h1 className={styles.formTitle}><span className={styles.formWord}> MEGA Fan</span> Sign Up </h1>
       <form onSubmit={handleSubmit} className={styles.form}>
   
@@ -169,6 +170,7 @@ const SignUpPage = () => {
   
         <button type="submit" className={styles.submitButton}>Sign Up</button>
       </form>
+    </div>
     </div>
   );
 };

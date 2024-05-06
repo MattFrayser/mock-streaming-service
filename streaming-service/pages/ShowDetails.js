@@ -7,7 +7,7 @@ const ShowDetails = () => {
   const router = useRouter();
   const id = router.query.query;
   const [show, setShow] = useState(null);
-  const [loading, setLoading] = useState(true);  // Default to true until data is fetched
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
 
   useEffect(() => {

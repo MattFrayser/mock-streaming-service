@@ -24,7 +24,7 @@ function EditEpisodes() {
         { name: 'episode_ID', title: 'ID' },
         { name: 'Show', title: 'Show' },
         { name: 'episode_number', title: 'Episode' },
-        { name: 'title', title: 'Title' }
+        { name: 'episode_title', title: 'Title' }
       ]);
   const [rows, setRows] = useState([]);
 

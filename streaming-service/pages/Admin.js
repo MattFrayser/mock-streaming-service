@@ -6,6 +6,8 @@ import ViewUsers from '../util/allUsers';
 import EditShows from '../util/editShows';
 import EditEpisodes from '@/util/editEpisodes';
 import EditUsers from '@/util/editUsers';
+import AddShow from '@/util/addShows';
+import AddEpisodes from '@/util/addEpisodes';
 import styles from "@/styles/admin.module.css";
 
 const sidebarItems = [
@@ -19,9 +21,13 @@ const sidebarItems = [
         { name: 'Shows', content: <EditShows /> },
         { name: 'Episodes', content: <EditEpisodes /> },
         { name: 'Users', content: <EditUsers /> },
-        { name: 'Genre', content: <div>Content</div> },
         ]
     },
+    { category: 'Add', items: [
+      { name: 'Shows', content: <AddShow /> },
+      { name: 'Episodes', content: <AddEpisodes /> },
+      ]
+  },
 ];
 
 

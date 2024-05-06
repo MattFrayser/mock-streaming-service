@@ -1,12 +1,16 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from "@/styles/components.module.css";
+import cookie from 'js-cookie';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -14,21 +18,20 @@ const LoginForm = () => {
     setErrorMessage('');
 
     try {
-      const requestOptions = {
+      const response = await fetch('/api/login',{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
-      };
-
-      // Make sure the URL is correct
-      const response = await fetch('/api/login', requestOptions);
-      const data = await response.json();
+      })
+      
+      const result = await response.json();
       setIsLoading(false);
 
-      if (response.ok) {
-        alert('Login successful!');
+      if (result.success) {
+        cookie.set('auth', result.token, { expires: 1 });
+        router.push('/Homepage');
       } else {
-        setErrorMessage(data.message || 'An error occurred');
+        setErrorMessage(result.message || 'Login failed');
       }
     } catch (error) {
       setIsLoading(false);

@@ -1,0 +1,39 @@
+.name{
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+.subscription{
+    color: #f6993f;;
+    font-size: 15px;
+}
+.divider{
+    background-color: white;
+}
+.showheader{
+    margin-top: 50px;
+    color: white;
+    font-size: 20px;
+}
+
+.title{
+    font-size: 25px;
+    margin-bottom: 10px;
+    color: white;
+}
+.options{
+    background-color: #f1f1f1;
+    color: black;
+    border: none;
+    height: 60px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px; 
+    margin: 10px;
+    
+}
+.options:hover{
+    background-color: rgba(248, 248, 248, 0.735);
+} 
+    

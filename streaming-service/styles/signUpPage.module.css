@@ -4,6 +4,15 @@
     padding: 1rem;
     font-family: Arial, sans-serif;
   }
+
+  .background{
+    position: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh; 
+    width: 100%;
+    
+}
   
   .formTitle {
     font-size: 2rem;
@@ -22,6 +31,14 @@
     display: flex;
     gap: 1.5rem;
   }
+
+  .formGroupL {
+    margin-bottom: 1.2rem;
+    display: flex;
+    gap: 1.5rem;
+    height: 200px;
+  }
+  
   
   .label {
     display: block;
@@ -36,6 +53,7 @@
     width: 100%;
     font-size: 1rem;
   }
+  
   
   .input:focus {
     border-color: #292929;

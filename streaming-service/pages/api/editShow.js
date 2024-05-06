@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-import { getDbConnection } from './db';
+import { getDbConnection, closeDbConnection } from './db';
 
 export default async function handler(req, res) {
 
@@ -20,6 +20,8 @@ export default async function handler(req, res) {
     } catch (error) {
         console.error('Failed to update show:', error);
         res.status(500).json({ error: 'Internal server error' });
-    } 
+    } finally {
+        await closeDbConnection();
+    }
     
 }

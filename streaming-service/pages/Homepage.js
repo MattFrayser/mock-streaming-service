@@ -3,11 +3,31 @@ import Featured from '../components/Featured';
 import Row from '../components/Row';
 import styles from "@/styles/homepage.module.css";
 import { useRouter } from 'next/router';
+import Header from '../components/Header';
+import { verify } from 'jsonwebtoken';
+import cookie from 'js-cookie';
 
 function Homepage() {
   const [featured, setFeatured] = useState(null);
   const [categories, setCategories] = useState([]);
   const router = useRouter();
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = cookie.get('auth');
+    if (token) {
+      try {
+        const decoded = verify(token, process.env.KEY);
+        setAuthenticated(true);
+      } catch (error) {
+        setAuthenticated(false);
+        router.push('/');
+      }
+    } else {
+      setAuthenticated(false);
+      router.push('/');
+    }
+  }, []);
 
 
   useEffect(() => {
@@ -54,6 +74,8 @@ function Homepage() {
   };
 
   return (
+    <>
+    <Header />
     <div className={styles['homepage']}>
       {featured && <Featured featured={featured} />}
       <div className={styles['categories']}>
@@ -62,6 +84,7 @@ function Homepage() {
         ))}
       </div>
     </div>
+    </>
   );
 }
 
