@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
 import styles from "@/styles/components.module.css";
+import Link from 'next/link';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -74,8 +75,8 @@ const LoginForm = () => {
       <button type="submit" className={styles['login-button']} disabled={isLoading}>
         {isLoading ? 'Logging In...' : 'Log In'}
       </button>
-      <a href="#" className={styles['forgot-password']}>Forgot Your Password?</a>
-      <a href="/" className={styles['forgot-password']}>Administrator Login</a>
+      <Link href="#" className={styles['forgot-password']}>Forgot Your Password?</Link>
+      <Link href="/Adminlogin" className={styles['forgot-password']}>Administrator Login</Link>
     </form>
   );
 };

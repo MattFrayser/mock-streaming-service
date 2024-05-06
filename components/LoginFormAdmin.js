@@ -35,7 +35,7 @@ const LoginForm = () => {
       if (!result || !result.ok) {
         setErrorMessage(result?.error || 'Login failed');
       } else {
-        if(result.user == 'test@test.com'){router.push('/Admin');}
+        if(result.User_id == 'test@test.com'){router.push('/Admin');}
       }
     } catch (error) {
       setIsLoading(false);
