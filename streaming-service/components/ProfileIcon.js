@@ -1,23 +1,19 @@
 import { useState } from "react";
 import styles from '@/styles/components.module.css'
+import {useRouter} from 'next/router'
 
 export default function ProfileIcon() {
-  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <div>
-      <div onClick={() => setIsOpen(!isOpen)} className={styles.icon}>
+      <div onClick={() => router.push('/Profile')} className={styles.icon}>
         <img
-          src="https://source.unsplash.com/random/100x100?person"
+          src="/register.png"
           alt="Profile"
           className={styles.img}
         />
       </div>
-      {isOpen && (
-        <p className={styles.iconContainer}>
-            Profile
-        </p>
-      )}
     </div>
   );
 }

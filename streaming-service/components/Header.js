@@ -6,12 +6,6 @@ import ProfileIcon from './ProfileIcon';
 
 
 const Header = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
-
     return (
         <header className={styles.header}>
             <h1 className={styles.headerTitle}>Anime Streaming</h1>

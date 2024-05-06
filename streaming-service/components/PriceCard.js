@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from "@/styles/pricing.module.css";
-import Link from 'next/link';
 import Router from 'next/router';
 
 

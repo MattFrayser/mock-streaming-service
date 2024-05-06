@@ -28,7 +28,7 @@ const LoginForm = () => {
       setIsLoading(false);
 
       if (result.success) {
-        cookie.set('auth', result.token, { expires: 1 });
+        localStorage.setItem("user", email)
         router.push('/Homepage');
       } else {
         setErrorMessage(result.message || 'Login failed');

@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 
 function Profile() {
     const router = useRouter();
-    const email = router.query.query;
+    const email = router.query.email;
 
     const [data, setData] = useState({
         name: "",
@@ -18,9 +18,11 @@ function Profile() {
     });
 
     useEffect(() => {
+        const userEmail = email || localStorage.getItem("email");
+
         const fetchProfile = async () => {
           try {
-            const response = await fetch(`/api/getProfile?email=user2@example.com`);
+            const response = await fetch(`/api/getProfile?email=${userEmail}`);
             const results = await response.json();
             setData({
                 name: results[0].name,

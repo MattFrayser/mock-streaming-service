@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     const query = `
     SELECT u.email, CONCAT(u.first_name, ' ', u.last_name)as 'name' , u.subscription_status, s.title, s.image
     FROM Users u
-    JOIN Watch_History h ON u.email = h.user
+    JOIN Watch_History h ON u.email = h.user_ID
     JOIN Shows s ON h.show_ID = s.show_ID
     WHERE u.email = ?
     `;

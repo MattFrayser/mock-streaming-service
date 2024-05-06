@@ -14,15 +14,9 @@ function Homepage() {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const token = cookie.get('auth');
-    if (token) {
-      try {
-        const decoded = verify(token, process.env.KEY);
-        setAuthenticated(true);
-      } catch (error) {
-        setAuthenticated(false);
-        router.push('/');
-      }
+    
+    if (localStorage.getItem("user")){
+      setAuthenticated(true);
     } else {
       setAuthenticated(false);
       router.push('/');
