@@ -14,7 +14,7 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      router.push('/Homepage');
+      router.push('/Admin');
     }
   }, [status]);
 
@@ -35,7 +35,7 @@ const LoginForm = () => {
       if (!result || !result.ok) {
         setErrorMessage(result?.error || 'Login failed');
       } else {
-        router.push('/Homepage');
+        if(result.user == 'test@test.com'){router.push('/Admin');}
       }
     } catch (error) {
       setIsLoading(false);
@@ -74,8 +74,6 @@ const LoginForm = () => {
       <button type="submit" className={styles['login-button']} disabled={isLoading}>
         {isLoading ? 'Logging In...' : 'Log In'}
       </button>
-      <a href="#" className={styles['forgot-password']}>Forgot Your Password?</a>
-      <a href="/" className={styles['forgot-password']}>Administrator Login</a>
     </form>
   );
 };
