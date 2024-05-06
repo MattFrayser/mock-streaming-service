@@ -4,24 +4,13 @@ import Row from '../components/Row';
 import styles from "@/styles/homepage.module.css";
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
-import { verify } from 'jsonwebtoken';
-import cookie from 'js-cookie';
+import { useSession } from 'next-auth/react';
 
 function Homepage() {
   const [featured, setFeatured] = useState(null);
   const [categories, setCategories] = useState([]);
   const router = useRouter();
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    
-    if (localStorage.getItem("user")){
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-      router.push('/');
-    }
-  }, []);
+  const { data: session } = useSession();
 
 
   useEffect(() => {

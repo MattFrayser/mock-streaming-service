@@ -1,8 +1,8 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 import styles from "@/styles/components.module.css";
-import cookie from 'js-cookie';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +10,13 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
+  const { data: session, status } = useSession();
 
+  useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/Homepage');
+    }
+  }, [status]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,20 +24,18 @@ const LoginForm = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/login',{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-      
-      const result = await response.json();
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
       setIsLoading(false);
 
-      if (result.success) {
-        localStorage.setItem("user", email)
-        router.push('/Homepage');
+      if (!result || !result.ok) {
+        setErrorMessage(result?.error || 'Login failed');
       } else {
-        setErrorMessage(result.message || 'Login failed');
+        router.push('/Homepage');
       }
     } catch (error) {
       setIsLoading(false);
@@ -39,6 +43,9 @@ const LoginForm = () => {
     }
   };
 
+  if (status === 'loading') {
+    return <p>Loading...</p>;
+  }
   return (
     <form className={styles['login-form']} onSubmit={handleSubmit}>
       {errorMessage && <p className={styles['error-message']}>{errorMessage}</p>}

@@ -1,14 +1,12 @@
 import { Avatar, Box, Button, Chip, Container, Divider, Grid, Typography } from "@mui/material";
-import { NextPage } from "next";
-import Link from "next/link";
-import { styled } from "@mui/system";
+import { useSession } from 'next-auth/react';
 import styles from '@/styles/profile.module.css'
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 function Profile() {
+    const { data: session, status } = useSession();
     const router = useRouter();
-    const email = router.query.email;
 
     const [data, setData] = useState({
         name: "",
@@ -18,7 +16,6 @@ function Profile() {
     });
 
     useEffect(() => {
-        const userEmail = email || localStorage.getItem("email");
 
         const fetchProfile = async () => {
           try {
