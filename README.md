@@ -1,6 +1,10 @@
-## Available Scripts
+# Project Overview
+This project is a Mock Streaming service created for CMSC 508. 
+The purpose of the project is to demonstrate capabilties of connecting to and maniulating a database server.
 
-In the project directory, you can run:
+## View Project
+[On Vercel](https://vercel.com/matts-projects-6c5395e7/cmsc508-project)
+
 
 ### `npm run dev`
 
