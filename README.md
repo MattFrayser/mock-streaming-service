@@ -5,6 +5,9 @@ The purpose of the project is to demonstrate capabilties of connecting to and ma
 ## View Project
 [On Vercel](https://vercel.com/matts-projects-6c5395e7/cmsc508-project)
 
+## Download and run local
+### `npm install`
+Installs project
 
 ### `npm run dev`
 
