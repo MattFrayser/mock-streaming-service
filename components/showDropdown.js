@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const ShowDropdown = ({ onCategorySelected }) => {
-  // State to keep track of the selected option
+const ShowDropdown = ({ onSelected }) => {
   const [selected, setSelected] = useState('');
   const [shows, setShows] = useState([]);
 
@@ -22,8 +21,8 @@ const ShowDropdown = ({ onCategorySelected }) => {
   const handleChange = (e) => {
     const newValue = e.target.value;
     setSelected(newValue);
-    if (onCategorySelected) {
-      onCategorySelected(newValue);
+    if (onSelected) {
+      onSelected(newValue);
     }
   };
 
@@ -39,3 +38,4 @@ const ShowDropdown = ({ onCategorySelected }) => {
 };
 
 export default ShowDropdown;
+

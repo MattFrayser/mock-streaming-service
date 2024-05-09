@@ -44,76 +44,56 @@ function EditUsers() {
     fetchUsers();
   }, []);
 
-  // const addUser = async (newRows) => {
-  //   try {
-  //       const response = await fetch(`/api/addUser`, {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify(newRows),
-  //       });
-  
-  //       if (!response.ok) {
-  //         throw new Error('Failed to add');
-  //       }
-  
-  //       const responseData = await response.json();
-  //       console.log('Add successful:', responseData);
-  //       setRows([...rows, ...newRows]);
-  //     } catch (error) {
-  //       console.error('Error adding:', error);
-  //       alert(`Error adding: ${error.message}`);
-  //     }
-  // }
-
-  const updateUser = async (email, updatedData) => {
-    const index = rows.findIndex(row => row.email === email);
-    const updatedRows = [...rows]; 
-    const originalRow = updatedRows[index];
-    updatedRows[index] = { ...originalRow, ...updatedData }; 
-    setRows(updatedRows);
-    try {
-      const response = await fetch(`/api/editUser`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedData),
-      });
-  
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to update show');
-      }
-  
-      console.log('Update successful:', response.json()); // Log successful update
-    } catch (error) {
-      console.error('Error updating user', error);
-      alert(`Error: ${error.message}`);
-    }
-  };
 
   const deleteUser = async (email) => {
     try {
         const response = await fetch(`/api/deleteUser`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(email),
+            body: JSON.stringify({ email: email }),
         });
 
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to delete show');
+            throw new Error(errorData.error || 'Failed to delete user');
         }
 
         console.log('Delete successful:', await response.json());
         setRows(rows => rows.filter(row => row.email !== email));
     } catch (error) {
-        console.error('Error deleting show:', error);
+        console.error('Error deleting:', error);
         alert(`Error deleting ${email}: ${error.message}`);
     }
 };
 
-  const getRowId = row => row.show_ID;
+const updateUser = async (email, updatedData) => {
+    const index = rows.findIndex(row => row.email === email);
+    const updatedRows = [...rows];
+    updatedRows[index] = { ...rows[index], ...updatedData };
+    try {
+      const response = await fetch(`/api/editUser`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData),
+      });
 
-  const commitChanges = ({added, changed, deleted }) => {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to update user');
+      }
+
+      console.log('Update successful:', await response.json());
+      setRows(updatedRows);
+    } catch (error) {
+      console.error('Error updating user:', error);
+      alert(`Error: ${error.message}`);
+      setRows([...rows]); 
+    }
+};
+
+  const getRowId = row => row.email;
+
+  const commitChanges = ({changed, deleted }) => {
     // if (added) {
     //     const startingAddedId = rows.length > 0 ? rows[rows.length - 1].id + 1 : 0;
     //     const newRows = addedRows.map((row, index) => ({

@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       { expiresIn: '5m' }
     );
 
-    res.status(200).json({ success: true, user_ID: user.id, email: user.email, token });
+    res.status(200).json({ success: true, user_ID: user.user.id, email: user.email, token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

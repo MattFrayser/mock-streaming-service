@@ -15,11 +15,12 @@ function Profile() {
         showsWatched: []
     });
 
+    const email = session?.user?.email;
     useEffect(() => {
 
         const fetchProfile = async () => {
           try {
-            const response = await fetch(`/api/getProfile?email=${userEmail}`);
+            const response = await fetch(`/api/getProfile?email=${email}`);
             const results = await response.json();
             setData({
                 name: results[0].name,

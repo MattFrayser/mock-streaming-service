@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         console.log(req.body)
         const { title, description, genre, image } = req.body;
         
-        const sql = `INSERT INTO Shows (title, description, genre, image) VALUES(title = ?, description = ?, genre = ?, image = ?`;
+        const sql = `INSERT INTO Shows (title, description, genre, image) VALUES (?, ?, ?, ?)`;
         const values = [title, description, genre, image];
         const [result] = await db.execute(sql, values);
 
