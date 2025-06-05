@@ -5,15 +5,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function formatDuration(seconds: number): string {
-  const hours = Math.floor(seconds / 3600)
-  const minutes = Math.floor((seconds % 3600) / 60)
-  const remainingSeconds = seconds % 60
+export function formatDuration(minutes: number): string {
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
   
-  if (hours > 0) {
-    return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
+  if (hours === 0) {
+    return `${mins}m`
   }
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
+  
+  return `${hours}h ${mins}m`
 }
 
 export function formatCurrency(cents: number): string {
@@ -24,11 +24,11 @@ export function formatCurrency(cents: number): string {
 }
 
 export function formatDate(date: string | Date): string {
-  return new Date(date).toLocaleDateString('en-US', {
+  return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-  })
+  }).format(new Date(date))
 }
 
 export function formatRelativeTime(date: string | Date): string {
@@ -69,7 +69,7 @@ export function slugify(text: string): string {
 
 export function truncateText(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text
-  return text.slice(0, maxLength) + '...'
+  return text.substring(0, maxLength).replace(/\s+\S*$/, '') + '...'
 }
 
 export function calculateProgress(current: number, total: number): number {
@@ -89,9 +89,12 @@ export function debounce<T extends (...args: any[]) => any>(
   }
 }
 
-export function generateImagePlaceholder(width: number, height: number, text: string): string {
-  const encodedText = encodeURIComponent(text)
-  return `https://placehold.co/${width}x${height}/1a1a1a/ffffff?text=${encodedText}`
+export function generateImagePlaceholder(width: number, height: number, text?: string): string {
+  const bgColor = 'cccccc'
+  const textColor = '969696'
+  const displayText = text || `${width}x${height}`
+  
+  return `https://via.placeholder.com/${width}x${height}/${bgColor}/${textColor}?text=${encodeURIComponent(displayText)}`
 }
 
 export function isValidEmail(email: string): boolean {

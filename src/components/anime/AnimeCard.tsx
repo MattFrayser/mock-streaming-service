@@ -6,49 +6,54 @@ import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Show, Episode, Anime } from '@/types/database'
+import { Show, Episode } from '@/types/database'
 import { formatDuration, generateImagePlaceholder } from '@/lib/utils'
 import { Play, Plus, Check, Star, Calendar, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 interface AnimeCardProps {
-  anime: Anime
-  isLoading?: boolean
+  show: Show
   className?: string
   size?: 'sm' | 'md' | 'lg'
   showInfo?: boolean
-  onWatchlistToggle?: (animeId: string, isAdding: boolean) => void
+  onWatchlistToggle?: (showId: string, isInWatchlist: boolean) => void
   isInWatchlist?: boolean
 }
 
-const sizeClasses = {
-  sm: 'h-48',
-  md: 'h-64',
-  lg: 'h-80',
-}
-
 export function AnimeCard({ 
-  anime, 
-  isLoading = false,
-  className = '',
-  size = 'md',
+  show, 
+  className, 
+  size = 'md', 
   showInfo = true,
   onWatchlistToggle,
-  isInWatchlist = false
+  isInWatchlist = false 
 }: AnimeCardProps) {
   const [imageError, setImageError] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
-  if (isLoading) {
-    return (
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-gray-200 animate-pulse" />
-    )
+  const sizeClasses = {
+    sm: 'w-32 h-44',
+    md: 'w-48 h-64',
+    lg: 'w-64 h-80'
   }
 
   const handleWatchlistClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    onWatchlistToggle?.(anime.id, !isInWatchlist)
+    onWatchlistToggle?.(show.id, !isInWatchlist)
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'ongoing':
+        return 'success'
+      case 'completed':
+        return 'default'
+      case 'cancelled':
+        return 'destructive'
+      default:
+        return 'secondary'
+    }
   }
 
   return (
@@ -61,24 +66,44 @@ export function AnimeCard({
     >
       <Card className="overflow-hidden bg-card/50 backdrop-blur-sm border-white/10 hover:border-primary/50 transition-all duration-300">
         <CardContent className="p-0">
+          {/* Image Container */}
           <div className={`relative ${sizeClasses[size]} overflow-hidden`}>
-            <Link href={`/anime/${anime.id}`}>
+            <Link href={`/anime/${show.id}`}>
               <Image
-                src={imageError ? generateImagePlaceholder(300, 400, anime.title) : anime.cover_image}
-                alt={anime.title}
+                src={imageError ? generateImagePlaceholder(300, 400, show.title) : (show.cover_image_url || generateImagePlaceholder(300, 400, show.title))}
+                alt={show.title}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-110"
                 onError={() => setImageError(true)}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
               />
               
+              {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               
-              <div className="absolute top-2 right-2 flex items-center space-x-1 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1">
-                <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                <span className="text-xs font-medium text-white">{anime.rating.toFixed(1)}</span>
+              {/* Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Button variant="gradient" size="icon" className="rounded-full shadow-lg">
+                  <Play className="w-5 h-5 fill-current" />
+                </Button>
               </div>
 
+              {/* Status Badge */}
+              <div className="absolute top-2 left-2">
+                <Badge variant={getStatusColor(show.status) as any} className="text-xs">
+                  {show.status}
+                </Badge>
+              </div>
+
+              {/* Rating */}
+              {show.rating > 0 && (
+                <div className="absolute top-2 right-2 flex items-center space-x-1 bg-black/50 backdrop-blur-sm rounded-full px-2 py-1">
+                  <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                  <span className="text-xs font-medium text-white">{show.rating.toFixed(1)}</span>
+                </div>
+              )}
+
+              {/* Watchlist Button */}
               {onWatchlistToggle && (
                 <motion.div 
                   className="absolute bottom-2 right-2"
@@ -103,24 +128,30 @@ export function AnimeCard({
             </Link>
           </div>
 
+          {/* Info Section */}
           {showInfo && (
             <div className="p-3 space-y-2">
-              <Link href={`/anime/${anime.id}`}>
+              <Link href={`/anime/${show.id}`}>
                 <h3 className="font-semibold text-sm leading-tight line-clamp-2 hover:text-primary transition-colors">
-                  {anime.title}
+                  {show.title}
                 </h3>
               </Link>
               
               <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{anime.release_year}</span>
+                <div className="flex items-center space-x-1">
+                  <Calendar className="w-3 h-3" />
+                  <span>{show.release_year}</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Clock className="w-3 h-3" />
+                  <span>{show.total_episodes} eps</span>
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-1">
-                {anime.genres.slice(0, 2).map((genre: string) => (
-                  <Badge key={genre} variant="outline" className="text-xs">
-                    {genre}
-                  </Badge>
-                ))}
+              <div className="text-xs text-muted-foreground">
+                <Badge variant="outline" className="text-xs">
+                  {show.genre}
+                </Badge>
               </div>
             </div>
           )}
@@ -130,7 +161,7 @@ export function AnimeCard({
   )
 }
 
-// components/anime/AnimeGrid.tsx
+// AnimeGrid component
 interface AnimeGridProps {
   shows: Show[]
   title?: string
@@ -187,7 +218,7 @@ export function AnimeGrid({
         {shows.map((show) => (
           <AnimeCard
             key={show.id}
-            anime={show}
+            show={show}
             onWatchlistToggle={onWatchlistToggle}
             isInWatchlist={watchlistIds.has(show.id)}
           />
@@ -197,7 +228,7 @@ export function AnimeGrid({
   )
 }
 
-// components/anime/EpisodeCard.tsx
+// EpisodeCard component
 interface EpisodeCardProps {
   episode: Episode
   show: Show
