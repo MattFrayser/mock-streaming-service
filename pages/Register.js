@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import PricingPage from '../components/PricingPage';
+import PricingPage from '../oldcomponents/PricingPage';
 import styles from '@/styles/register.module.css';
 
 const Register = () => {
 
 
   return (
-      <>
+    <>
       <div className={styles.background} style={{ backgroundImage: 'url(/register.png)' }}></div>
-        <div>
+      <div>
         <PricingPage />
-        </div>
-      </>
+      </div>
+    </>
   );
 };
 

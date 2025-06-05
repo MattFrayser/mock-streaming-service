@@ -84,7 +84,8 @@ function EditShows() {
         throw new Error(errorData.error || 'Failed to update show');
       }
   
-      console.log('Update successful:', response.json()); // Log successful update
+      const responseData = await response.json();
+      console.log('Update successful:', responseData);
     } catch (error) {
       console.error('Error updating show:', error);
       alert(`Error: ${error.message}`);

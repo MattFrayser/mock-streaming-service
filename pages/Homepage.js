@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Featured from '../components/Featured';
-import Row from '../components/Row';
+import Featured from '../oldcomponents/Featured';
+import Row from '../oldcomponents/Row';
 import styles from "@/styles/homepage.module.css";
 import { useRouter } from 'next/router';
-import Header from '../components/Header';
+import Header from '../oldcomponents/Header';
 import { useSession } from 'next-auth/react';
 
 function Homepage() {
@@ -52,21 +52,21 @@ function Homepage() {
     const id = show.show_ID;
     router.push({
       pathname: '/ShowDetails',
-      query: {query: id}
+      query: { query: id }
     });
   };
 
   return (
     <>
-    <Header />
-    <div className={styles['homepage']}>
-      {featured && <Featured featured={featured} />}
-      <div className={styles['categories']}>
-        {categories.map(category => (
-          <Row key={category.categoryName} category={category} onShowClick={handleShowClick} />
-        ))}
+      <Header />
+      <div className={styles['homepage']}>
+        {featured && <Featured featured={featured} />}
+        <div className={styles['categories']}>
+          {categories.map(category => (
+            <Row key={category.categoryName} category={category} onShowClick={handleShowClick} />
+          ))}
+        </div>
       </div>
-    </div>
     </>
   );
 }

@@ -13,7 +13,9 @@ export default async function handler(req, res) {
         const values = [episode_number, show_title, episode_title, episode_video];
         const [result] = await db.execute(sql, values);
 
-        if(!result) {res.status(404).json({ error: 'Show not found' });}
+        if (!result || result.length === 0) {
+            return res.status(404).json({ error: 'Show not found' });
+        }
 
         res.status(200).json({ message: 'Updated successfully' });
 

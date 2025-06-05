@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/details.module.css';
-import YouTubeEmbed from '../components/Video';
+import YouTubeEmbed from '../oldcomponents/Video';
 
 const ShowDetails = () => {
   const router = useRouter();
   const id = router.query.query;
   const [show, setShow] = useState(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const ShowDetails = () => {
   return (
     <div className={styles.showContainer}>
       <div className={styles.class}>
-        <img src={show.image} alt={show.title} className={styles.image}/>
+        <img src={show.image} alt={show.title} className={styles.image} />
         <h1 className={styles.head}>{show.title}</h1>
         <div className={styles.subbox}>
           <span>{show.season} Seasons</span>
@@ -56,7 +56,7 @@ const ShowDetails = () => {
       <div className={styles.episodeColumn}>
         {show.episodes.map((episode, index) => (
           <div key={index} className={styles.episode}>
-            <YouTubeEmbed videoId={episode.episode_video} /> 
+            <YouTubeEmbed videoId={episode.episode_video} />
             <h3>{episode.episode_title}</h3>
             <p>Episode {show.episode_number}</p>
           </div>

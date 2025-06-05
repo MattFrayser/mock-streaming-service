@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/signUpPage.module.css';
-import ShowDropdown from '../components/showDropdown';
+import ShowDropdown from '../oldcomponents/showDropdown';
 
 const AddEpisodes = () => {
   const router = useRouter();
@@ -35,7 +35,7 @@ const AddEpisodes = () => {
 
     if (!formData.episode_number || !formData.show_title || !formData.episode_title || !formData.episode_video) {
       alert(`Please fill in all fields correctly.`);
-      return; 
+      return;
     }
 
     try {
@@ -62,22 +62,22 @@ const AddEpisodes = () => {
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
-            <input
-              type="text"
-              id="episode_number"
-              name="episode_number"
-              placeholder="Episode number"
-              className={styles.input}
-              value={formData.episode_number}
-              onChange={handleChange}
-              required
-            />
+          <input
+            type="text"
+            id="episode_number"
+            name="episode_number"
+            placeholder="Episode number"
+            className={styles.input}
+            value={formData.episode_number}
+            onChange={handleChange}
+            required
+          />
         </div>
-        
+
         <div className={styles.formGroup}>
-            <ShowDropdown onSelected={handleShowSelected}/>
+          <ShowDropdown onSelected={handleShowSelected} />
         </div>
-  
+
         <div className={styles.formGroup}>
           <input
             type="text"
@@ -90,7 +90,7 @@ const AddEpisodes = () => {
             required
           />
         </div>
-  
+
         <div className={styles.formGroup}>
           <input
             type="text"
