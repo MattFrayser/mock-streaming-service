@@ -171,7 +171,7 @@ export default function HomePage() {
               <p className="text-lg md:text-xl mb-6 text-gray-200 leading-relaxed">
                 {featuredShow.description}
               </p>
-              
+
               <div className="flex items-center space-x-6 mb-8">
                 <div className="flex items-center space-x-2">
                   <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
@@ -193,8 +193,8 @@ export default function HomePage() {
                     Watch Now
                   </Link>
                 </Button>
-                <Button 
-                  variant="glass" 
+                <Button
+                  variant="glass"
                   size="lg"
                   onClick={() => handleWatchlistToggle(featuredShow.id, watchlistIds.has(featuredShow.id))}
                 >
@@ -227,7 +227,7 @@ export default function HomePage() {
               </Link>
             </Button>
           </div>
-          
+
           <AnimeGrid
             shows={trendingShows}
             loading={loading}
@@ -255,7 +255,7 @@ export default function HomePage() {
               </Link>
             </Button>
           </div>
-          
+
           <AnimeGrid
             shows={recentShows}
             loading={loading}
@@ -283,7 +283,7 @@ export default function HomePage() {
               </Link>
             </Button>
           </div>
-          
+
           <AnimeGrid
             shows={topRatedShows}
             loading={loading}

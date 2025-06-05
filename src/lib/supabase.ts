@@ -1,7 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
-import { createClientComponentClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import type { Database } from '../types/database'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import type { Database } from '@/types/database'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -10,17 +9,25 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
 
 // Client component client (for use in components)
-export const createSupabaseClient = () => 
+export const createSupabaseClient = () =>
   createClientComponentClient<Database>()
 
-// Server component client (for use in server components)
-export const createSupabaseServerClient = () => 
-  createServerComponentClient<Database>({ cookies })
+// Server-side client (only import this in server components)
+export const createSupabaseServerClient = async () => {
+  const { cookies } = await import('next/headers')
+  const { createServerComponentClient } = await import('@supabase/auth-helpers-nextjs')
+  return createServerComponentClient<Database>({ cookies })
+}
 
 // Admin client (service role for admin operations)
 export const getServiceSupabase = () => {
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-  return createClient<Database>(supabaseUrl, supabaseServiceKey)
+  return createClient<Database>(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  })
 }
 
 // Database helper functions
@@ -44,15 +51,15 @@ export const withErrorHandling = async <T>(
   operation: () => Promise<{ data: T | null; error: any }>
 ): Promise<T> => {
   const { data, error } = await operation()
-  
+
   if (error) {
     handleDatabaseError(error)
   }
-  
+
   if (!data) {
     throw new DatabaseError('No data returned from query')
   }
-  
+
   return data
 }
 
